@@ -1,0 +1,36 @@
+#Used for salting hashes
+password: password
+
+#hash: none #Not recomended - Collisions may occur
+#hash: crc32 #32-bit - 7 char token - Recomended only for internal use
+hash: md5 #128-bit - 26 char token
+#hash: sha1 #160-bit - 32 char token
+#hash: sha2 #256-bit - 51 char token
+
+read_transforms: true #Read Transformed files for faster serving
+write_transforms: true #Write Tranformed files for faster serving
+
+fav_icon: ../images/blog-50projects-com-favicon.png
+fav_icon_mime: image/png
+
+#Defined Storage Sets
+storage_set:
+#- name: s3
+#  bucket: bucketname
+#  write_priority: 1
+#  read_priority: 2
+#  type: s3
+#  secret: aws_secret
+#  key: aws_key
+- name: file1
+  write_priority: 1
+  read_priority: 1
+  type: file
+  base_dir: /data/images1/
+- name: file2
+  write_priority: 2
+  read_priority: 3
+  type: file
+  base_dir: /data/images2/
+
+
