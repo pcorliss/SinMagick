@@ -12,18 +12,17 @@ require "base64"
 require 'net/http'
 
 #My Classes
-require 'sinmagick/transform'
-require 'sinmagick/storage_set'
-require 'sinmagick/s3_storage'
-require 'sinmagick/file_storage'
-require 'sinmagick/s3_image'
-require 'sinmagick/file_system_image'
+require 'lib/sinmagick/transform'
+require 'lib/sinmagick/storage_set'
+require 'lib/sinmagick/s3_storage'
+require 'lib/sinmagick/file_storage'
+require 'lib/sinmagick/s3_image'
+require 'lib/sinmagick/file_system_image'
 
-::AppConfig = YAML.load_file("../settings.yml")
+::AppConfig = YAML.load_file("config/settings.yml")
 
 
 class SinMagick
-  attr_accessor :env
   storset = StorageSet.new
 
   puts "Welcome to SinMagick"

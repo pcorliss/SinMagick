@@ -27,10 +27,9 @@ storage_set:
   read_priority: 1
   type: file
   base_dir: /data/images1/
-- name: file2
-  write_priority: 2
-  read_priority: 3
-  type: file
-  base_dir: /data/images2/
-
+#- name: file2
+#  write_priority: 2
+#  read_priority: 3
+#  type: file
+#  base_dir: /data/images2/
 

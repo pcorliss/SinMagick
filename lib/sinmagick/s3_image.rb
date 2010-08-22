@@ -1,4 +1,4 @@
-require 'sinmagick/sin_image'
+require 'lib/sinmagick/sin_image'
 
 class SinMagick
   class S3Image < SinImage

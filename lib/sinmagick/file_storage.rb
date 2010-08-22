@@ -1,6 +1,6 @@
 require 'fileutils'
-require 'sinmagick/storage_type'
-require 'sinmagick/sin_image'
+require 'lib/sinmagick/storage_type'
+require 'lib/sinmagick/sin_image'
 
 class SinMagick
   class FileStorage < StorageType

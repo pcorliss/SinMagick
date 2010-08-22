@@ -1,6 +1,6 @@
 require 'aws/s3'
-require 'sinmagick/storage_type'
-require 'sinmagick/sin_image'
+require 'lib/sinmagick/storage_type'
+require 'lib/sinmagick/sin_image'
 
 class SinMagick
   class S3Storage < StorageType

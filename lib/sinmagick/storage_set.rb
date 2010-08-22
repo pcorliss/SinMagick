@@ -1,5 +1,5 @@
 #may need enumerable module for sorting below
-require 'sinmagick/storage_type'
+require 'lib/sinmagick/storage_type'
 require 'stringio'
 require 'yaml'
 
@@ -76,3 +76,4 @@ class SinMagick
 
   end
 end
+
