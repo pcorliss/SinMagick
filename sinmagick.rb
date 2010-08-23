@@ -21,12 +21,14 @@ require 'lib/sinmagick/file_system_image'
 
 ::AppConfig = YAML.load_file("config/settings.yml")
 
-
+# Handles base sinatra requests and initializes Storage Set
 class SinMagick
   storset = StorageSet.new
 
   puts "Welcome to SinMagick"
 
+  # Serves simple upload form for posting to web service. 
+  # Provides both file upload and URL upload.
   get '/' do
     content_type 'text/html'
     '<html>
@@ -56,6 +58,8 @@ class SinMagick
     File.open(AppConfig['fav_icon']).read
   end
 
+  # Serves a specified image file. Token is 
+  # typically the selected hash of the original file.
   get '/:token/:file_name' do
     if img = storset.read(params[:token], params[:file_name])
       content_type img.get_mime
@@ -66,7 +70,7 @@ class SinMagick
     end
   end
 
-
+  # Transforms the orignal file
   get '/transform/:transform/:token/:file_name' do
     unless AppConfig['read_transforms'] && img = storset.read(params[:token], params[:file_name]+'.'+params[:transform])
       transform_array = Transform.parse_transform(params[:transform])
@@ -83,7 +87,8 @@ class SinMagick
     content_type img.get_mime
     img.get_raw
   end
-
+  
+  # Takes file uploads with the 'file' parameter
   post '/upload' do
     unless params[:file] &&
            (tmpfile = params[:file][:tempfile]) &&
@@ -97,6 +102,7 @@ class SinMagick
     return '/'+token+'/'+file_name
   end
 
+  # Takes URL uploads with the 'url' parameter
   post '/upload/url' do
     unless params[:url]
       halt 401, "No url selected"

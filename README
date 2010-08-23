@@ -1,3 +1,66 @@
-== SinMagick
+## SinMagick
 
-You should document your project here.
+Web service to handle image transforms.
+http://blog.50projects.com/p/sinmagick-image-processing.html
+
+## Setup
+* The following gems are required sinatra, rmagick, aws/s3
+* Modify the config/settings.yml and config/sinmagick.yml file to represent your environment
+* Start using thin, rackup or mongrel (thin start -C config/sinmagick.yml)
+
+## Usage
+* Point your web browser at http://[HOST]:[PORT]/. You should see a basic file upload form. An upload operation returns the file path.
+* Raw images can be accessed at http://[HOST]:[PORT]/[hash]/[filename].
+* Transformed images can be accessed at http://[HOST]:[PORT]/transform/[transform]/[hash]/[filename]. See below for available transforms.
+* I highly recomend Varnish as a frontend for this web service.
+
+## Transforms
+
+S - Scaling
+* h - height - int
+* w - width - int
+* example - Sw100_h100
+R - Crop + Resize
+* h - height - int
+* w - width - int
+* g - gravity - (n,w,s,e,nw,sw,ne,se)
+* example - Rw100_h100_gnw
+A - Resize but maintain aspect ratio
+* h - height - int
+* w - width - int
+* example - Aw100_h100
+C - Cropping
+* h - height - int
+* w - width - int
+* x - crop start - int
+* y - crop start - int
+* example - Cx0_y0_w100_h100
+G - Crop using gravity
+* h - height - int
+* w - width - int
+* g - gravity - (n,w,s,e,nw,sw,ne,se)
+* example - Gw100_h100_gn
+O - Rotation
+* a - angle - int (1-359)
+* example - Oa90
+B - Black and White
+* example - B
+P - Converts bloated PNGs to JPEGs
+* t - image density threshold - int (a good value is a 3. Image density is calculated as width*height/filesize)
+* example - Pt2
+F - Changes File Formats
+* f - format - string (png,jpeg,gif)
+* example - Ffjpeg
+
+## Compound Examples
+* Transforms are calculated left to right so order can be important.
+* Multiple transforms can be executed by using a hyphen (-).
+* example - http://[HOST]:[PORT]/transform/Aw100_h100-Oa90-Pt3/[hash]/[filename] 
+(Resize to 100x100 while maintaining aspect ratio. Then rotate 90 degrees. Then convert to a JPEG if the file has an image density of more than 3)
+
+## Storage Priority
+* Read_priority - Sets the order in which a configured storage item will be read from (int >1). If the priority is set to 0 it will be skipped. Two items should not have the same read priority as the service does not load balance reads.
+* Write_priority - Sets the order in which a configured storage item will be read from (int >1). If the priority is set to 0 it will be skipped. Two items may have the same write priority. If they do they will both be written to. This can be good for backups to s3 for example.
+
+
+
